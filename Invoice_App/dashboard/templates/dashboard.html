@@ -1,0 +1,117 @@
+{% load pwa %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% progressive_web_app_meta %}
+    <meta charset="UTF-8">
+    <title>Garage Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #ffffff 0%, #e6f0ff 100%);
+            padding: 25px 30px;
+            width: 220px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .card p {
+            margin: 10px 0 0 0;
+            font-size: 28px;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .links a {
+            display: inline-block;
+            margin: 0 15px;
+            padding: 10px 20px;
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .links a:hover {
+            background-color: #0b5ed7;
+        }
+
+        @media (max-width: 700px) {
+            .cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Garage Dashboard</h1>
+
+<div class="cards">
+    <div class="card">
+        <h3>Total Invoices</h3>
+        <p>{{ total_invoices }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Today Invoices</h3>
+        <p>{{ today_invoices }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Total Amount</h3>
+        <p>AED {{ formatted_total_amount }}</p>
+    </div>
+</div>
+
+<div class="links">
+    <a href="{% url 'invoice_list' %}">📄 View Invoices</a>
+    <a href="{% url 'create_invoice' %}">➕ Create Invoice</a>
+</div>
+
+</body>
+</html>

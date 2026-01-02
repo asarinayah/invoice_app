@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company List</title>
+    {% progressive_web_app_meta %}
+</head>
+<body>
+    <h2>Companies</h2>
+
+    <a href="{% url 'create_company' %}">+ Add Company</a>
+
+    <ul>
+        {% for company in companies %}
+            <li>
+                <strong>{{ company.name }}</strong><br>
+                Phone: {{ company.phone_number }}<br>
+                Address: {{ company.address }}
+            </li>
+        {% empty %}
+            <li>No companies created yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
