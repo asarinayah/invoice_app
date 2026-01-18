@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'dashboard',
     'login',
     'phonenumber_field',
-    'company.apps.CompanyConfig',
+    'company',
     'pwa',
 ]
 
@@ -83,8 +83,12 @@ WSGI_APPLICATION = 'Invoice_App.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'invoice_db',
+        'USER': 'invoice_user',
+        'PASSWORD': 'admin123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

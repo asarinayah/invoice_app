@@ -30,12 +30,6 @@ def company_list(request):
     if not profile.company:
         return redirect('create_company')
 
-    invoices = Company.objects.filter(
-        company=profile.company
-    ).order_by('-date_created')
-
     return render(request, 'company/company_list.html', {
-        'invoices': invoices
+        'company': profile.company
     })
-
-

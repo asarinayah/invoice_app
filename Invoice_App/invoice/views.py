@@ -7,13 +7,27 @@ from django.utils.timezone import localtime
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from functools import wraps
+from django.shortcuts import redirect
 
+
+
+def company_required(view_func):
+    @wraps(view_func)
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        
+        return view_func(request, *args, **kwargs)
+    return wrapper
+
+@company_required
 def create_invoice(request):
     if request.method == "POST":
         invoice=Invoice.objects.create(
             company=request.user.profile.company,  # automatically link company
             customer_name=request.POST["customer_name"],
-            customer_phone=request.POST["customer_phone"],
+            phone_number=request.POST["phone_number"],
             service_description=request.POST["service_description"],
             amount_due=request.POST["amount_due"],
             discount=request.POST.get("discount", 0),
@@ -25,17 +39,21 @@ def create_invoice(request):
 
     return render(request, 'invoices/create_invoice.html')
 
+@company_required
 def invoice_detail(request, invoice_id):
-    invoice = get_object_or_404(Invoice,id=invoice_id)
+    invoice = get_object_or_404(Invoice,id=invoice_id,company=request.user.profile.company)
     return render(request, 'invoices/invoice_detail.html', {'invoice': invoice})
 
-@login_required
+
+@company_required
 def invoice_list(request):
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
     query = request.GET.get('q')
     company = request.user.profile.company
-    invoices = Invoice.objects.filter(company=company).order_by('-date_created')
+    invoices = Invoice.objects.filter(company=company).order_by('-date_created') 
+    ###company=company LEFT SIDE company indicates field mentioned in Invoice models
+    ###RIGHT SIDE company indicated the variable in your view (company = request.user.profile.company)
 
     if start_date and end_date:
         invoices = invoices.filter(

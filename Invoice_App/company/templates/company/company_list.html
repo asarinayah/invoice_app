@@ -1,24 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Company List</title>
+    <meta charset="UTF-8">
+    <title>My Company Dashboard</title>
+    {% load pwa %}
     {% progressive_web_app_meta %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        a.button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .company-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #fafafa;
+        }
+
+        .company-card strong {
+            font-size: 1.2rem;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-    <h2>Companies</h2>
 
-    <a href="{% url 'create_company' %}">+ Add Company</a>
+<header>
+    <h1>Welcome, {{ request.user.username }}</h1>
+</header>
 
-    <ul>
-        {% for company in companies %}
-            <li>
-                <strong>{{ company.name }}</strong><br>
-                Phone: {{ company.phone_number }}<br>
-                Address: {{ company.address }}
-            </li>
-        {% empty %}
-            <li>No companies created yet.</li>
-        {% endfor %}
-    </ul>
+<main>
+    <h2>My Company</h2>
+
+    <a class="button" href="{% url 'create_company' %}">+ Add Company</a>
+
+    {% if company %}
+        <div class="company-card">
+            <strong>{{ company.name }}</strong><br>
+            Phone: {{ company.phone_number }}<br>
+            Address: {{ company.address }}
+        </div>
+    {% else %}
+        <p class="empty-message">No company created yet.</p>
+    {% endif %}
+</main>
+
 </body>
 </html>
