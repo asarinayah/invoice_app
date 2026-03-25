@@ -23,7 +23,6 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('invoice_list/', invoice_views.invoice_list, name='invoice_list'),
     path('invoices/',include('invoice.urls')),
-    path('items/',include('item_master.urls')),
     path('',include('login.urls')),
     path('',include('company.urls')),
     path('',include('pwa.urls')),

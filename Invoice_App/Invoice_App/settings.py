@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'invoice',
-    'item_master',
     'dashboard',
     'login',
     'phonenumber_field',
