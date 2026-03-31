@@ -26,4 +26,5 @@ urlpatterns = [
     path('',include('login.urls')),
     path('',include('company.urls')),
     path('',include('pwa.urls')),
+    path('item_master/',include('item_master.urls')),
 ]
